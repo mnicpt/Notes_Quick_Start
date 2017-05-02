@@ -1,5 +1,41 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
-
-{{outlet}}
+ <div class="wrapper">    
+  <div class="master container">        
+    <div class="master_header">    
+      <div class="container">&nbsp;</div>        
+      <div class="master_title container">Notes</div>
+      <div class="edit_button container btn">Edit</div>            
+    </div>        
+    <div class="notes"> 
+        {{#each model.notes as |note|}}
+            {{#link-to 'note' note}}
+                {{note-row note=note showNote=(action "showNote")}} 
+            {{/link-to}}
+        {{/each}}      
+    </div>        
+    <div class="toolbar">            
+      <div class="container">&nbsp;</div>            
+      <div class="notes_count container">
+          {{model.notes.length}} 
+          {{#if model.singleNote}}
+                note
+           {{else}}
+                notes
+            {{/if}}
+        </div>            
+      <div class="add_button container btn" {{action "addNote"}}>{{fa-icon "plus-square-o"}}</div>
+    </div>    
+  </div>    
+  <div class="detail container">        
+    <div class="detail_header">
+        {{#if model.selectedNote}}
+            {{input type='text' value=model.selectedNote.title}}
+        {{/if}}
+    </div>
+    <div class="detail_content">
+        {{#unless model.selectedNote}}
+            <div class="default_note">+<br/>Note</div>
+         {{/unless}}
+        {{outlet}}
+    </div>
+  </div>
+</div>
